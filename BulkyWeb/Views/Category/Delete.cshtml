@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Delete Category";
+}
+
+@model Category
+
+<div class="container mt-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-secondary bg-gradient text-center">
+            <h2 class="text-primary">
+                <i class="bi bi-trash-fill me-2"></i> Delete Category
+            </h2>
+        </div>
+        <form method="post">
+            <input asp-for="Id" hidden />
+            <div class="card-body p-4">
+                <div class="border p-4">
+                    <div class="text-bg-danger mb-3" style="font-weight: 400;" asp-validation-summary="All"></div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Name" disabled class="form-control" id="CategoryName" style="font-weight: 400;" />
+                        <label asp-for="Name" for="CategoryName" class="text-primary" style="font-weight: 500;">Category Name</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="DisplayOrder" disabled class="form-control" id="DisplayOrder" style="font-weight: 400;" />
+                        <label asp-for="DisplayOrder" for="DisplayOrder" class="text-primary" style="font-weight: 500;">Display Order</label>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-3 mb-2 mb-md-0">
+                            <button type="submit" class="btn btn-danger w-100" style="height:50px">Delete</button>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <a asp-controller="Category" asp-action="Index" class="btn btn-outline-primary border-2 w-100" style="height:50px">Back To List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

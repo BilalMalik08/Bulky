@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Create Category";
+}
+
+@model Category
+
+<div class="container mt-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-secondary bg-gradient text-center">
+            <h2 class="text-primary">
+                <i class="bi bi-plus-circle me-2"></i> Create Category
+            </h2>
+        </div>
+        <div class="card-body p-4">
+            <form method="post">
+                <div class="border p-4">
+                    <div asp-validation-summary="All" class="text-bg-danger mb-3" style="font-weight: 500;"></div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Name" class="form-control" id="CategoryName" placeholder="Category Name" style="font-weight: 400;" />
+                        <label asp-for="Name" for="CategoryName" class="text-primary" style="font-weight: 500;">Category Name</label>
+                        <span asp-validation-for="Name" class="text-danger" style="font-weight: 500;"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="DisplayOrder" class="form-control" id="DisplayOrder" placeholder="Display Order" style="font-weight: 400;" />
+                        <label asp-for="DisplayOrder" for="DisplayOrder" class="text-primary" style="font-weight: 500;">Display Order</label>
+                        <span asp-validation-for="DisplayOrder" class="text-danger" style="font-weight: 500;"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-3 mb-2 mb-md-0">
+                            <button type="submit" class="btn btn-primary w-100" style="height:50px">Create</button>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <a asp-controller="Category" asp-action="Index" class="btn btn-outline-primary border-2 w-100" style="height:50px">Back To List</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
