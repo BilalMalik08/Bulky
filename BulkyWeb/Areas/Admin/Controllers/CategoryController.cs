@@ -3,8 +3,9 @@ using Bulky.DataAccess.Data;
 using Microsoft.AspNetCore.Mvc;
 using Bulky.DataAccess.Repository.IRepository;
 
-namespace BulkyWeb.Controllers
+namespace BulkyWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -111,8 +112,8 @@ namespace BulkyWeb.Controllers
             }
             catch (Exception ex)
             {
-               
-                TempData["error"] = "Category Deletion Failed."; 
+
+                TempData["error"] = "Category Deletion Failed.";
             }
 
             return RedirectToAction("Index", "Category");
