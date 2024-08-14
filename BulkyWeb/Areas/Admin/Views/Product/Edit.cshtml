@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Edit Product";
+}
+
+@model Product
+
+<div class="container mt-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-secondary bg-gradient text-center">
+            <h2 class="text-primary">
+                <i class="bi bi-pencil-square me-2"></i> Edit Product
+            </h2>
+        </div>
+        <form method="post">
+            <input asp-for="Id" hidden />
+            <div class="card-body p-4">
+                <div class="border p-4">
+                    <div class="text-bg-danger mb-3" style="font-weight: 400;" asp-validation-summary="All"></div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Title" class="form-control" id="ProductTitle" placeholder="Product Title" style="font-weight: 400;" />
+                        <label asp-for="Title" for="ProductTitle" class="text-primary" style="font-weight: 500;">Product Title</label>
+                        <span asp-validation-for="Title" class="text-danger" style="font-weight: 500;"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea asp-for="Description" class="form-control" id="ProductDescription" placeholder="Product Description" style="height: 100px; font-weight: 400;"></textarea>
+                        <label asp-for="Description" for="ProductDescription" class="text-primary" style="font-weight: 500;">Product Description</label>
+                        <span asp-validation-for="Description" class="text-danger" style="font-weight: 500;"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="ISBN" class="form-control" id="ProductISBN" placeholder="ISBN Number" style="font-weight: 400;" />
+                        <label asp-for="ISBN" for="ProductISBN" class="text-primary" style="font-weight: 500;">ISBN Number</label>
+                        <span asp-validation-for="ISBN" class="text-danger" style="font-weight: 500;"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Author" class="form-control" id="ProductAuthor" placeholder="Author Name" style="font-weight: 400;" />
+                        <label asp-for="Author" for="ProductAuthor" class="text-primary" style="font-weight: 500;">Author Name</label>
+                        <span asp-validation-for="Author" class="text-danger" style="font-weight: 500;"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="ListPrice" class="form-control" id="ProductListPrice" placeholder="List Price" style="font-weight: 400;" />
+                        <label asp-for="ListPrice" for="ProductListPrice" class="text-primary" style="font-weight: 500;">List Price</label>
+                        <span asp-validation-for="ListPrice" class="text-danger" style="font-weight: 500;"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Price" class="form-control" id="ProductPrice" placeholder="Price" style="font-weight: 400;" />
+                        <label asp-for="Price" for="ProductPrice" class="text-primary" style="font-weight: 500;">Price</label>
+                        <span asp-validation-for="Price" class="text-danger" style="font-weight: 500;"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Price50" class="form-control" id="ProductPrice50" placeholder="Price for 50 Units" style="font-weight: 400;" />
+                        <label asp-for="Price50" for="ProductPrice50" class="text-primary" style="font-weight: 500;">Price for 50 Units</label>
+                        <span asp-validation-for="Price50" class="text-danger" style="font-weight: 500;"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Price100" class="form-control" id="ProductPrice100" placeholder="Price for 100 Units" style="font-weight: 400;" />
+                        <label asp-for="Price100" for="ProductPrice100" class="text-primary" style="font-weight: 500;">Price for 100 Units</label>
+                        <span asp-validation-for="Price100" class="text-danger" style="font-weight: 500;"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-3 mb-2 mb-md-0">
+                            <button type="submit" class="btn btn-primary w-100" style="height:50px">Update</button>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <a asp-controller="Product" asp-action="Index" class="btn btn-outline-primary border-2 w-100 d-flex align-items-center justify-content-center" style="height:50px">Back To List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
