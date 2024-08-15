@@ -12,10 +12,12 @@ namespace BulkyWeb.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(IUnitOfWork unitOfWork)
+        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -54,15 +56,52 @@ namespace BulkyWeb.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                string productPath = Path.Combine(wwwRootPath, @"images\product");
+
+                if (file != null)
+                {
+                    // Generate a unique filename using GUID
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+
+                    // Combine the path with the filename
+                    string fullPath = Path.Combine(productPath, fileName);
+
+                    // Ensure the directory exists
+                    if (!Directory.Exists(productPath))
+                    {
+                        Directory.CreateDirectory(productPath);
+                    }
+
+                    // Save the file
+                    using (var fileStream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    // If updating, delete the old image
+                    if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
+                    {
+                        string oldImagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    // Update the Product's ImageUrl property with the new file name
+                    productVM.Product.ImageUrl = @"\images\product\" + fileName;
+                }
+
                 if (productVM.Product.Id == 0)
                 {
-                    // Create
+                    // Create new product
                     _unitOfWork.Product.Add(productVM.Product);
                     TempData["success"] = "Product Created Successfully";
                 }
                 else
                 {
-                    // Update
+                    // Update existing product
                     _unitOfWork.Product.Update(productVM.Product);
                     TempData["success"] = "Product Updated Successfully";
                 }
