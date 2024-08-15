@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Create Product";
+    ViewData["Title"] = Model.Product.Id == 0 ? "Create Product" : "Update Product";
 }
 
 @model ProductVM
@@ -8,11 +8,12 @@
     <div class="card shadow border-0">
         <div class="card-header bg-secondary bg-gradient text-center">
             <h2 class="text-primary">
-                <i class="bi bi-plus-circle me-2"></i> Create Product
+                <i class="bi bi-plus-circle me-2"></i> @(Model.Product.Id == 0 ? "Create Product" : "Update Product")
             </h2>
         </div>
         <div class="card-body p-4">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
+                <input asp-for="Product.Id" hidden />
                 <div class="border p-4">
                     <div asp-validation-summary="All" class="text-bg-danger mb-3" style="font-weight: 500;"></div>
 
@@ -22,10 +23,9 @@
                         <span asp-validation-for="Product.Title" class="text-danger" style="font-weight: 500;"></span>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        <textarea asp-for="Product.Description" class="form-control" id="ProductDescription" placeholder="Product Description" style="height: 100px; font-weight: 400;"></textarea>
-                        <label asp-for="Product.Description" for="ProductDescription" class="text-primary" style="font-weight: 500;">Product Description</label>
-                        <span asp-validation-for="Product.Description" class="text-danger" style="font-weight: 500;"></span>
+                    <div class="mb-3">
+                        <label asp-for="Product.Description" for="ProductDescription" class="form-label text-primary" style="font-weight: 500;">Product Description</label>
+                        <textarea asp-for="Product.Description" class="form-control" id="ProductDescription" placeholder="Enter Product Description" style="height: 100px; font-weight: 400; margin-top: 0.5rem;"></textarea>
                     </div>
 
                     <div class="form-floating mb-3">
@@ -73,14 +73,13 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input asp-for="Product.ImageUrl" class="form-control" id="ProductImageUrl" placeholder="Image URL" style="font-weight: 400;" />
-                        <label asp-for="Product.ImageUrl" for="ProductImageUrl" class="text-primary" style="font-weight: 500;">Image URL</label>
-                        <span asp-validation-for="Product.ImageUrl" class="text-danger" style="font-weight: 500;"></span>
+                        <input type="file" class="form-control" id="ProductImageUrl" placeholder="Select Image" style="font-weight: 400;" />
+                        <label asp-for="Product.ImageUrl" for="ProductImageUrl" class="text-primary" style="font-weight: 500;">Select Image</label>
                     </div>
 
                     <div class="row">
                         <div class="col-12 col-md-3 mb-2 mb-md-0">
-                            <button type="submit" class="btn btn-primary w-100" style="height:50px">Create</button>
+                            <button type="submit" class="btn btn-primary w-100" style="height:50px">@(Model.Product.Id == 0 ? "Create" : "Update")</button>
                         </div>
                         <div class="col-12 col-md-3">
                             <a asp-controller="Product" asp-action="Index" class="btn btn-outline-primary border-2 w-100 d-flex align-items-center justify-content-center" style="height:50px">Back To List</a>
@@ -94,4 +93,19 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons lists visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste ai mentions tinycomments footnotes mergetags autocorrect typography inlinecss markdown colorpicker', // Added colorpicker plugin
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | align lineheight | checklist numlist bullist indent outdent', // Added color picker to the toolbar
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name', 
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ],
+            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+        });
+    </script>
 }
