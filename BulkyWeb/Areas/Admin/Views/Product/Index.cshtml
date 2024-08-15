@@ -22,11 +22,11 @@
         <div class="card-header bg-secondary text-white">
             <h5 class="mb-0">Products</h5>
         </div>
-        <div class="card-body p-0">
+        <div class="card-body p-2">
             <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
-                <table class="table table-bordered table-striped mb-0">
-                    <thead class="thead-secondary">
-                        <tr class="align-middle" style="font-weight: 500;">
+                <table id="tblData" class="table table-bordered table-striped mb-0">
+                    <thead class="bg-light text-dark">
+                        <tr class="align-middle">
                             <th class="text-center" style="width: 25%; min-width: 150px;">Title</th>
                             <th class="text-center" style="width: 15%; min-width: 150px;">ISBN</th>
                             <th class="text-center" style="width: 10%; min-width: 150px;">Price</th>
@@ -35,24 +35,22 @@
                             <th class="text-center" style="width: 15%; min-width: 150px;">Action Buttons</th>
                         </tr>
                     </thead>
-                    <tbody style="font-weight: 400;">
-                        @foreach (var obj in Model)
+                    <tbody>
+                        @foreach (var product in Model)
                         {
-                            <tr class="align-middle text-center">
-                                <td class="py-1">@obj.Title</td>
-                                <td class="py-1">@obj.ISBN</td>
-                                <td class="py-1">@obj.ListPrice</td>
-                                <td class="py-1">@obj.Author</td>
-                                <td class="py-1">@obj.Category.Name</td>
-                                <td class="py-1">
-                                    <div class="d-flex justify-content-center">
-                                        <a asp-controller="Product" asp-action="Upsert" asp-route-id="@obj.Id" class="btn btn-secondary mx-1 d-inline-flex align-items-center justify-content-center" style="height: 30px; width: 100px;">
-                                            <i class="bi bi-pencil-square me-1"></i> Edit
-                                        </a>
-                                        <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-outline-danger mx-1 d-inline-flex align-items-center justify-content-center" style="height: 30px; width: 100px;">
-                                            <i class="bi bi-trash-fill me-1"></i> Delete
-                                        </a>
-                                    </div>
+                            <tr>
+                                <td class="text-center p-2">@product.Title</td>
+                                <td class="text-center p-2">@product.ISBN</td>
+                                <td class="text-center p-2">@product.ListPrice</td>
+                                <td class="text-center p-2">@product.Author</td>
+                                <td class="text-center p-2">@product.Category</td>
+                                <td class="text-center p-2">
+                                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-secondary btn-sm me-2">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </a>
+                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-outline-danger btn-sm">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </a>
                                 </td>
                             </tr>
                         }
@@ -62,6 +60,10 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/Product.js"></script>
+}
 
 <style>
     .table-responsive::-webkit-scrollbar {
@@ -73,7 +75,29 @@
         scrollbar-width: none;
     }
 
-    .container {
-        overflow: hidden;
+    .BTN-EDIT, .BTN-DELETE {
+        width: 75px;
+        margin: 1px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+
+   
+    table.dataTable tbody td,
+    table.dataTable thead th {
+        text-align: center; 
+        vertical-align: middle; 
+    }
+
+       
+        table.dataTable tbody td .btn {
+            display: inline-block; 
+            margin: 0 2px;
+        }
+
+    
+    table.dataTable thead th {
+        background-color: #f8f9fa;
+        color: #343a40; 
     }
 </style>
