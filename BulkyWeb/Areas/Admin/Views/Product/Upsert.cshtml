@@ -15,8 +15,12 @@
             <form method="post" enctype="multipart/form-data">
                 <input asp-for="Product.Id" hidden />
                 <input asp-for="Product.ImageUrl" hidden />
-               <div class="row">
-                    <div class="col-10">
+
+                <div class="row">
+                    <div class="col-12 col-lg-2 mb-3 mb-lg-0">
+                        <img src="@Model.Product.ImageUrl" width="100%" alt="picture" class="img-fluid" style="border-radius: 5px; border: 1px solid #bbb9b9" />
+                    </div>
+                    <div class="col-12 col-lg-10">
                         <div class="border p-4">
                             <div asp-validation-summary="All" class="text-bg-danger mb-3" style="font-weight: 500;"></div>
 
@@ -81,17 +85,14 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-12 col-md-3 mb-2 mb-md-0">
+                                <div class="col-12 col-md-6 mb-2 mb-md-0">
                                     <button type="submit" class="btn btn-primary w-100" style="height:50px">@(Model.Product.Id == 0 ? "Create" : "Update")</button>
                                 </div>
-                                <div class="col-12 col-md-3">
+                                <div class="col-12 col-md-6">
                                     <a asp-controller="Product" asp-action="Index" class="btn btn-outline-primary border-2 w-100 d-flex align-items-center justify-content-center" style="height:50px">Back To List</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-2">
-                        <img src="@Model.Product.ImageUrl" width="100%" alt="picture" style="border-radius: 5px; border: 1px solid #bbb9b9"/>
                     </div>
                 </div>
             </form>
@@ -105,10 +106,10 @@
     <script>
         tinymce.init({
             selector: 'textarea',
-            plugins: 'anchor autolink charmap codesample emoticons lists visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste ai mentions tinycomments footnotes mergetags autocorrect typography inlinecss markdown colorpicker', // Added colorpicker plugin
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | align lineheight | checklist numlist bullist indent outdent', // Added color picker to the toolbar
+            plugins: 'anchor autolink charmap codesample emoticons lists visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste ai mentions tinycomments footnotes mergetags autocorrect typography inlinecss markdown colorpicker',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | align lineheight | checklist numlist bullist indent outdent',
             tinycomments_mode: 'embedded',
-            tinycomments_author: 'Author name', 
+            tinycomments_author: 'Author name',
             mergetags_list: [
                 { value: 'First.Name', title: 'First Name' },
                 { value: 'Email', title: 'Email' },

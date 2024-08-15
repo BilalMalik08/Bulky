@@ -43,7 +43,7 @@
                                 <td class="py-1">@obj.ISBN</td>
                                 <td class="py-1">@obj.ListPrice</td>
                                 <td class="py-1">@obj.Author</td>
-                                <td class="py-1">@obj.Author</td>
+                                <td class="py-1">@obj.Category.Name</td>
                                 <td class="py-1">
                                     <div class="d-flex justify-content-center">
                                         <a asp-controller="Product" asp-action="Upsert" asp-route-id="@obj.Id" class="btn btn-secondary mx-1 d-inline-flex align-items-center justify-content-center" style="height: 30px; width: 100px;">
