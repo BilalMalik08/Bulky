@@ -2,6 +2,9 @@
 using Bulky.DataAccess.Data;
 using Microsoft.AspNetCore.Mvc;
 using Bulky.DataAccess.Repository.IRepository;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Bulky.Models.ViewModels;
 
 namespace BulkyWeb.Areas.Admin.Controllers
 {
@@ -9,6 +12,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+
         public ProductController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -22,23 +26,40 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            ProductVM productVM = new()
+            {
+                CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+                Product = new Product()
+            };
+
+            return View(productVM);
         }
 
         [HttpPost]
-        public IActionResult Create(Product obj)
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(ProductVM productVM)
         {
-
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(obj);
+                _unitOfWork.Product.Add(productVM.Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product Created Successfully";
-                return RedirectToAction("Index", "Product");
+                return RedirectToAction("Index");
             }
 
+            // Repopulate CategoryList if ModelState is invalid
+            productVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString()
+            });
+
             TempData["error"] = "Product Creation Failed.";
-            return View(obj);
+            return View(productVM); // Return the object with errors
         }
 
         public IActionResult Edit(int? id)
@@ -48,26 +69,44 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Product? productFromDb1 = _unitOfWork.Product.Get(u => u.Id == id);
-            if (productFromDb1 == null)
+            var productFromDb = _unitOfWork.Product.Get(u => u.Id == id);
+            if (productFromDb == null)
             {
                 TempData["error"] = "Product Not Found.";
                 return NotFound();
             }
 
-            return View(productFromDb1);
+            ProductVM productVM = new()
+            {
+                Product = productFromDb,
+                CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                })
+            };
+
+            return View(productVM);
         }
 
         [HttpPost]
-        public IActionResult Edit(Product obj)
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(ProductVM obj)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Update(obj);
+                _unitOfWork.Product.Update(obj.Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product Updated Successfully";
-                return RedirectToAction("Index", "Product");
+                return RedirectToAction("Index");
             }
+
+            // Repopulate CategoryList if ModelState is invalid
+            obj.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString()
+            });
 
             TempData["error"] = "Product Update Failed.";
             return View(obj);
@@ -80,39 +119,31 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Product? productyFromDb1 = _unitOfWork.Product.Get(u => u.Id == id);
-            if (productyFromDb1 == null)
+            var productFromDb = _unitOfWork.Product.Get(u => u.Id == id);
+            if (productFromDb == null)
             {
                 TempData["error"] = "Product Not Found.";
                 return NotFound();
             }
 
-            return View(productyFromDb1);
+            return View(productFromDb);
         }
 
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {
-            Product? obj = _unitOfWork.Product.Get(u => u.Id == id);
+            var obj = _unitOfWork.Product.Get(u => u.Id == id);
             if (obj == null)
             {
                 TempData["error"] = "Product Not Found.";
                 return NotFound();
             }
 
-            try
-            {
-                _unitOfWork.Product.Remove(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Product Deleted Successfully";
-            }
-            catch (Exception ex)
-            {
-
-                TempData["error"] = "Product Deletion Failed.";
-            }
-
-            return RedirectToAction("Index", "Product");
+            _unitOfWork.Product.Remove(obj);
+            _unitOfWork.Save();
+            TempData["success"] = "Product Deleted Successfully";
+            return RedirectToAction("Index");
         }
     }
 }
