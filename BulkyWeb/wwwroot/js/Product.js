@@ -21,11 +21,16 @@ function loadDataTable() {
                 data: 'id',
                 width: '25%',
                 render: function (data, type, row) {
-                    // Construct the URLs using the row data
                     var editUrl = '/Admin/Product/Upsert?id=' + data;
                     return `
-                        <a href="${editUrl}" class="btn BTN-EDIT btn-secondary btn-sm">Edit</a>
-                        <a href="#" onClick="Delete(${data}); return false;" class="btn BTN-DELETE btn-outline-danger btn-sm">Delete</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="${editUrl}" class="btn btn-secondary btn-sm d-inline-flex align-items-center justify-content-center" style="height: 30px; width: 100px;">
+                                <i class="bi bi-pencil"></i> Edit
+                            </a>
+                            <a href="#" onClick="Delete(${data}); return false;" class="btn btn-outline-danger btn-sm d-inline-flex align-items-center justify-content-center" style="height: 30px; width: 100px;">
+                                <i class="bi bi-trash"></i> Delete
+                            </a>
+                        </div>
                     `;
                 }
             }
