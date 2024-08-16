@@ -73,9 +73,9 @@
 
                             <div class="form-floating mb-3">
                                 <select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-select" id="CategoryId" style="font-weight: 400;">
-                                    <option disabled selected value=""></option>
+                                    <option disabled selected value="">Select Category</option>
                                 </select>
-                                <label asp-for="Product.CategoryId" for="CategoryId" class="text-primary" style="font-weight: 500;">Select Category</label>
+                                <label asp-for="Product.CategoryId" for="CategoryId" class="text-primary" style="font-weight: 500;">Category</label>
                                 <span asp-validation-for="Product.CategoryId" class="text-danger" style="font-weight: 500;"></span>
                             </div>
 
