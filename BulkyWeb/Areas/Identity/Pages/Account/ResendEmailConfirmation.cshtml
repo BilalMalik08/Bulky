@@ -1,17 +1,22 @@
 ﻿@page
 @model ResendEmailConfirmationModel
+
 @{
-    ViewData["Title"] = "Resend email confirmation";
+    ViewData["Title"] = "Resend Email Confirmation";
 }
 
 <div class="bg-primary text-white p-3">
-    <h1 class="text-center">@ViewData["Title"]</h1>
+    <h1 class="text-center">
+        <i class="bi bi-arrow-repeat"></i> @ViewData["Title"]
+    </h1>
 </div>
 
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-lg-4 col-md-6 col-sm-8 bg-white p-4 shadow-sm rounded">
-            <h2 class="text-center">Enter your email</h2>
+            <h2 class="text-center">
+             Enter your email
+            </h2>
             <hr />
             <form method="post">
                 <div asp-validation-summary="All" class="text-danger" style="background-color: #3a595c; padding: 1rem; border-radius: .25rem;" role="alert"></div>
@@ -20,7 +25,9 @@
                     <label asp-for="Input.Email" class="form-label">Email</label>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
-                <button type="submit" class="w-100 btn btn-lg btn-primary">Resend</button>
+                <button type="submit" class="w-100 btn btn-lg btn-primary">
+                    <i class="bi bi-arrow-repeat"></i> Resend
+                </button>
             </form>
         </div>
     </div>

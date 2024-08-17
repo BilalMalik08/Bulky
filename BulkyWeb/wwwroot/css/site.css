@@ -1,13 +1,28 @@
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+.divider-text {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 0.5rem 0;
+    color: black;
+    font-weight: 200;
+}
+
+    .divider-text::before,
+    .divider-text::after {
+        content: "";
+        flex: 1;
+        border-top: 1px solid black;
+        margin: 0 0.5rem;
+    }
+
 a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
 }
-
-
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;
