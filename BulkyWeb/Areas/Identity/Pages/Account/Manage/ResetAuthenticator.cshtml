@@ -1,18 +1,59 @@
 ﻿@page
 @model ResetAuthenticatorModel
 @{
-    ViewData["Title"] = "Reset authenticator key";
+    ViewData["Title"] = "Reset Authenticator Key";
     ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
 }
 
 <div class="bg-primary text-white p-3">
-    <h3 class="text-center">@ViewData["Title"]</h3>
+    <h3 class="text-center">
+        <i class="bi bi-shield-lock-fill"></i> @ViewData["Title"]
+    </h3>
 </div>
 
 <div class="container my-5">
     <div class="row">
         <div class="col-md-4">
-            <partial name="_ManageNav" />
+            <!-- Navigation Links -->
+            @inject SignInManager<IdentityUser> SignInManager
+            @{
+                var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+            }
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                    <a class="nav-link @ManageNavPages.IndexNavClass(ViewContext) @(ViewData["ActivePage"]?.ToString() == "Index" ? "bg-secondary text-white" : "")" id="profile" asp-page="./Index">
+                        <i class="bi bi-person-circle"></i> Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @ManageNavPages.EmailNavClass(ViewContext) @(ViewData["ActivePage"]?.ToString() == "Email" ? "bg-secondary text-white" : "")" id="email" asp-page="./Email">
+                        <i class="bi bi-envelope-fill"></i> Email
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext) @(ViewData["ActivePage"]?.ToString() == "ChangePassword" ? "bg-secondary text-white" : "")" id="change-password" asp-page="./ChangePassword">
+                        <i class="bi bi-lock-fill"></i> Password
+                    </a>
+                </li>
+                @if (hasExternalLogins)
+                {
+                    <li id="external-logins" class="nav-item">
+                        <a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext) @(ViewData["ActivePage"]?.ToString() == "ExternalLogins" ? "bg-secondary text-white" : "")" asp-page="./ExternalLogins">
+                            <i class="bi bi-box-arrow-in-right"></i> External logins
+                        </a>
+                    </li>
+                }
+                <li class="nav-item">
+                    <a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext) @(ViewData["ActivePage"]?.ToString() == "TwoFactorAuthentication" ? "bg-secondary text-white" : "")" id="two-factor" asp-page="./TwoFactorAuthentication">
+                        <i class="bi bi-shield-lock-fill"></i> Two-factor authentication
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext) @(ViewData["ActivePage"]?.ToString() == "PersonalData" ? "bg-secondary text-white" : "")" id="personal-data" asp-page="./PersonalData">
+                        <i class="bi bi-file-person-fill"></i> Personal data
+                    </a>
+                </li>
+            </ul>
         </div>
 
         <div class="col-md-8">
@@ -29,7 +70,9 @@
             </div>
 
             <form id="reset-authenticator-form" method="post">
-                <button id="reset-authenticator-button" class="btn btn-danger w-100 mt-3" type="submit">Reset authenticator key</button>
+                <button id="reset-authenticator-button" class="btn btn-danger w-100 mt-3" type="submit">
+                    <i class="bi bi-arrow-counterclockwise"></i> Reset authenticator key
+                </button>
             </form>
         </div>
     </div>

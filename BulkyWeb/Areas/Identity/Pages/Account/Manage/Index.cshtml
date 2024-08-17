@@ -6,7 +6,9 @@
 }
 
 <div class="bg-primary text-white p-3">
-    <h3 class="text-center">@ViewData["Title"]</h3>
+    <h3 class="text-center">
+        <i class="bi bi-person-circle"></i> @ViewData["Title"]
+    </h3>
 </div>
 
 <div class="container my-5">
@@ -21,35 +23,47 @@
                 <li class="nav-item">
                     <a class="nav-link @ManageNavPages.IndexNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "Index") {
                     <text>bg-secondary text-white</text>
- }" id="profile" asp-page="./Index">Profile</a>
+ }" id="profile" asp-page="./Index">
+                        <i class="bi bi-person-circle"></i> Profile
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link @ManageNavPages.EmailNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "Email") {
                     <text>bg-secondary text-white</text>
- }" id="email" asp-page="./Email">Email</a>
+ }" id="email" asp-page="./Email">
+                        <i class="bi bi-envelope-fill"></i> Email
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "ChangePassword") {
                     <text>bg-secondary text-white</text>
- }" id="change-password" asp-page="./ChangePassword">Password</a>
+ }" id="change-password" asp-page="./ChangePassword">
+                        <i class="bi bi-lock-fill"></i> Password
+                    </a>
                 </li>
                 @if (hasExternalLogins)
                 {
                     <li id="external-logins" class="nav-item">
                         <a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "ExternalLogins") {
                     <text>bg-secondary text-white</text>
- }" asp-page="./ExternalLogins">External logins</a>
+ }" asp-page="./ExternalLogins">
+                                <i class="bi bi-box-arrow-in-right"></i> External logins
+                            </a>
                     </li>
                 }
                 <li class="nav-item">
                     <a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "TwoFactorAuthentication") {
                     <text>bg-secondary text-white</text>
- }" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a>
+ }" id="two-factor" asp-page="./TwoFactorAuthentication">
+                        <i class="bi bi-shield-lock-fill"></i> Two-factor authentication
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "PersonalData") {
                     <text>bg-secondary text-white</text>
- }" id="personal-data" asp-page="./PersonalData">Personal data</a>
+ }" id="personal-data" asp-page="./PersonalData">
+                        <i class="bi bi-file-person-fill"></i> Personal data
+                    </a>
                 </li>
             </ul>
         </div>
@@ -67,7 +81,9 @@
                         <label asp-for="Input.PhoneNumber" class="form-label">Phone Number</label>
                         <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
                     </div>
-                    <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-secondary">Save</button>
+                    <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-secondary">
+                        <i class="bi bi-save"></i> Save
+                    </button>
                 </form>
             </div>
         </div>

@@ -4,24 +4,36 @@
 }
 <ul class="nav nav-pills flex-column">
     <li class="nav-item">
-        <a class="nav-link @(ManageNavPages.IndexNavClass(ViewContext) == "active" ? "bg-secondary text-white" : "")" id="profile" asp-page="./Index">Profile</a>
+        <a class="nav-link @(ManageNavPages.IndexNavClass(ViewContext) == "active" ? "bg-secondary text-white" : "")" id="profile" asp-page="./Index">
+            <i class="bi bi-person-circle"></i> Profile
+        </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @(ManageNavPages.EmailNavClass(ViewContext) == "active" ? "bg-secondary text-white" : "")" id="email" asp-page="./Email">Email</a>
+        <a class="nav-link @(ManageNavPages.EmailNavClass(ViewContext) == "active" ? "bg-secondary text-white" : "")" id="email" asp-page="./Email">
+            <i class="bi bi-envelope-fill"></i> Email
+        </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @(ManageNavPages.ChangePasswordNavClass(ViewContext) == "active" ? "bg-secondary text-white" : "")" id="change-password" asp-page="./ChangePassword">Password</a>
+        <a class="nav-link @(ManageNavPages.ChangePasswordNavClass(ViewContext) == "active" ? "bg-secondary text-white" : "")" id="change-password" asp-page="./ChangePassword">
+            <i class="bi bi-lock-fill"></i> Password
+        </a>
     </li>
     @if (hasExternalLogins)
     {
         <li id="external-logins" class="nav-item">
-            <a id="external-login" class="nav-link @(ManageNavPages.ExternalLoginsNavClass(ViewContext) == "active" ? "bg-secondary text-white" : "")" asp-page="./ExternalLogins">External logins</a>
+            <a id="external-login" class="nav-link @(ManageNavPages.ExternalLoginsNavClass(ViewContext) == "active" ? "bg-secondary text-white" : "")" asp-page="./ExternalLogins">
+                <i class="bi bi-box-arrow-in-right"></i> External logins
+            </a>
         </li>
     }
     <li class="nav-item">
-        <a class="nav-link @(ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext) == "active" ? "bg-secondary text-white" : "")" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a>
+        <a class="nav-link @(ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext) == "active" ? "bg-secondary text-white" : "")" id="two-factor" asp-page="./TwoFactorAuthentication">
+            <i class="bi bi-shield-lock-fill"></i> Two-factor authentication
+        </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @(ManageNavPages.PersonalDataNavClass(ViewContext) == "active" ? "bg-secondary text-white" : "")" id="personal-data" asp-page="./PersonalData">Personal data</a>
+        <a class="nav-link @(ManageNavPages.PersonalDataNavClass(ViewContext) == "active" ? "bg-secondary text-white" : "")" id="personal-data" asp-page="./PersonalData">
+            <i class="bi bi-file-person-fill"></i> Personal data
+        </a>
     </li>
 </ul>
