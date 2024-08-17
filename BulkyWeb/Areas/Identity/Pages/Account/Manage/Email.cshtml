@@ -5,37 +5,85 @@
     ViewData["ActivePage"] = ManageNavPages.Email;
 }
 
-<h3>@ViewData["Title"]</h3>
-<partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
-        <form id="email-form" method="post">
-            <div asp-validation-summary="All" class="text-danger" role="alert"></div>
-            @if (Model.IsEmailConfirmed)
-            {
-                <div class="form-floating mb-3 input-group">
-                    <input asp-for="Email" class="form-control" placeholder="Please enter your email." disabled />
-                        <div class="input-group-append">
-                            <span class="h-100 input-group-text text-success font-weight-bold">✓</span>
+<div class="bg-primary text-white p-3">
+    <h3 class="text-center">@ViewData["Title"]</h3>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Navigation Links -->
+            @inject SignInManager<IdentityUser> SignInManager
+            @{
+                var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+            }
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                    <a class="nav-link @ManageNavPages.IndexNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "Index") {
+                    <text>bg-secondary text-white</text>
+ }" id="profile" asp-page="./Index">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @ManageNavPages.EmailNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "Email") {
+                    <text>bg-secondary text-white</text>
+ }" id="email" asp-page="./Email">Email</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "ChangePassword") {
+                    <text>bg-secondary text-white</text>
+ }" id="change-password" asp-page="./ChangePassword">Password</a>
+                </li>
+                @if (hasExternalLogins)
+                {
+                    <li id="external-logins" class="nav-item">
+                        <a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "ExternalLogins") {
+                    <text>bg-secondary text-white</text>
+ }" asp-page="./ExternalLogins">External logins</a>
+                    </li>
+                }
+                <li class="nav-item">
+                    <a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "TwoFactorAuthentication") {
+                    <text>bg-secondary text-white</text>
+ }" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "PersonalData") {
+                    <text>bg-secondary text-white</text>
+ }" id="personal-data" asp-page="./PersonalData">Personal data</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <div class="bg-primary p-4 shadow-sm rounded">
+                <form id="email-form" method="post">
+                    <div asp-validation-summary="All" class="text-danger" style= padding: 1rem; border-radius: .25rem;" role="alert"></div>
+                    @if (Model.IsEmailConfirmed)
+                    {
+                        <div class="form-floating mb-3 input-group">
+                            <input asp-for="Email" class="form-control" placeholder="Please enter your email." disabled />
+                            <div class="input-group-append">
+                                <span class="h-100 input-group-text text-success font-weight-bold">✓</span>
+                            </div>
+                            <label asp-for="Email" class="form-label">Email</label>
                         </div>
-                    <label asp-for="Email" class="form-label"></label>
-                </div>
-            }
-            else
-            {
-                <div class="form-floating mb-3">
-                    <input asp-for="Email" class="form-control" placeholder="Please enter your email." disabled />
-                    <label asp-for="Email" class="form-label"></label>
-                    <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Send verification email</button>
-                </div>
-            }
-            <div class="form-floating mb-3">
-                <input asp-for="Input.NewEmail" class="form-control" autocomplete="email" aria-required="true" placeholder="Please enter new email." />
-                <label asp-for="Input.NewEmail" class="form-label"></label>
-                <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
+                    }
+                    else
+                    {
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" class="form-control" placeholder="Please enter your email." disabled />
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Send verification email</button>
+                        </div>
+                    }
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.NewEmail" class="form-control" autocomplete="email" aria-required="true" placeholder="Please enter new email." />
+                        <label asp-for="Input.NewEmail" class="form-label">New Email</label>
+                        <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
+                    </div>
+                    <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="w-100 btn btn-lg btn-secondary">Change email</button>
+                </form>
             </div>
-            <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="w-100 btn btn-lg btn-primary">Change email</button>
-        </form>
+        </div>
     </div>
 </div>
 

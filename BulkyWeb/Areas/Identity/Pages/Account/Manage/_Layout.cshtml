@@ -1,29 +1,30 @@
-﻿@{
-    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
-    {
-        Layout = parentLayout.ToString();
-    }
-    else
-    {
-        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
-    }
-}
-
-<h1>Manage your account</h1>
-
-<div>
-    <h2>Change your account settings</h2>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - YourAppName</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <partial name="_ValidationScriptsPartial" />
+</head>
+<body>
+    <header>
+        <!-- Include any common header content here -->
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                @await Html.PartialAsync("_NavigationLinksPartial")
+            </div>
+            <div class="col-md-6">
+                @RenderBody()
+            </div>
         </div>
     </div>
-</div>
-
-@section Scripts {
+    <footer>
+        <!-- Include any common footer content here -->
+    </footer>
     @RenderSection("Scripts", required: false)
-}
+</body>
+</html>

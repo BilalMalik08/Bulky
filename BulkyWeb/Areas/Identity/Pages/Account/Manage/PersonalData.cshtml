@@ -5,20 +5,69 @@
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
 
-<h3>@ViewData["Title"]</h3>
+<div class="bg-primary text-white p-3">
+    <h3 class="text-center">@ViewData["Title"]</h3>
+</div>
 
-<div class="row">
-    <div class="col-md-6">
-        <p>Your account contains personal data that you have given us. This page allows you to download or delete that data.</p>
-        <p>
-            <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
-        </p>
-        <form id="download-data" asp-page="DownloadPersonalData" method="post">
-            <button class="btn btn-primary" type="submit">Download</button>
-        </form>
-        <p>
-            <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">Delete</a>
-        </p>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Navigation Links -->
+            @inject SignInManager<IdentityUser> SignInManager
+            @{
+                var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+            }
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                    <a class="nav-link @ManageNavPages.IndexNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "Index") {
+                    <text>bg-secondary text-white</text>
+ }" id="profile" asp-page="./Index">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @ManageNavPages.EmailNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "Email") {
+                    <text>bg-secondary text-white</text>
+ }" id="email" asp-page="./Email">Email</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "ChangePassword") {
+                    <text>bg-secondary text-white</text>
+ }" id="change-password" asp-page="./ChangePassword">Password</a>
+                </li>
+                @if (hasExternalLogins)
+                {
+                    <li id="external-logins" class="nav-item">
+                        <a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "ExternalLogins") {
+                    <text>bg-secondary text-white</text>
+ }" asp-page="./ExternalLogins">External logins</a>
+                    </li>
+                }
+                <li class="nav-item">
+                    <a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "TwoFactorAuthentication") {
+                    <text>bg-secondary text-white</text>
+ }" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext) @if (ViewData["ActivePage"]?.ToString() == "PersonalData") {
+                    <text>bg-secondary text-white</text>
+ }" id="personal-data" asp-page="./PersonalData">Personal data</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-6">
+            <div class="bg-primary text-white p-4 shadow-sm rounded">
+                <p>Your account contains personal data that you have given us. This page allows you to download or delete that data.</p>
+                <p class="text-danger">
+                    <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
+                </p>
+                <form id="download-data" asp-page="DownloadPersonalData" method="post">
+                    <button class="btn btn-secondary w-100 mb-3" type="submit">Download</button>
+                </form>
+                <p>
+                    <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger w-100">Delete</a>
+                </p>
+            </div>
+        </div>
     </div>
 </div>
 
